@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wordle+</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="bg-blobs">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+  </div>
+
+  <!-- ── WORD SELECTION SCREEN ── -->
+  <div id="select-screen">
+    <div class="select-logo">
+      <span style="color:#ef476f">W</span><span style="color:#ffd166">O</span><span style="color:#06d6a0">R</span><span style="color:#118ab2">D</span><span style="color:#8338ec">L</span><span style="color:#ef476f">E</span><span style="color:var(--subtext);font-size:1.6rem;vertical-align:super">+</span>
+    </div>
+    <div class="select-subtitle">Choose your difficulty &amp; play</div>
+
+    <div class="select-panel">
+      <h3>🎯 Select Difficulty</h3>
+      <div class="select-diff-tabs">
+        <button class="select-diff-tab" data-len="4"><span>4</span><small>Starter</small></button>
+        <button class="select-diff-tab active" data-len="5"><span>5</span><small>Easy</small></button>
+        <button class="select-diff-tab" data-len="6"><span>6</span><small>Medium</small></button>
+        <button class="select-diff-tab" data-len="7"><span>7</span><small>Hard</small></button>
+      </div>
+
+      <!-- Random mode info -->
+      <div id="random-badge">
+        <span class="rbadge">Random Word</span>
+        <p>A surprise word will be chosen for you!</p>
+      </div>
+
+      <button id="start-btn"><div class="btn-inner">▶ Start Game</div></button>
+    </div>
+  </div>
+
+  <!-- ── MAIN GAME ── -->
+  <header>
+    <div class="logo">
+      <span class="logo-w">W</span><span class="logo-o">O</span><span class="logo-r">R</span><span class="logo-d">D</span><span class="logo-l">L</span><span class="logo-e">E</span><span class="logo-plus">+</span>
+    </div>
+    <div class="header-right">
+      <div id="difficulty-bar">
+        <button class="diff-btn" data-len="4" title="4 letters — Starter">4</button>
+        <button class="diff-btn active" data-len="5" title="5 letters — Easy">5</button>
+        <button class="diff-btn" data-len="6" title="6 letters — Medium">6</button>
+        <button class="diff-btn" data-len="7" title="7 letters — Hard">7</button>
+      </div>
+      <button id="stats-btn">&#128202; Stats</button>
+    </div>
+  </header>
+
+  <div id="mode-label"><span id="mode-badge">EASY</span> 5-Letter Words</div>
+  <div id="toast-container"></div>
+
+  <div id="board-wrapper">
+    <div id="board"></div>
+  </div>
+
+  <div id="keyboard">
+    <div class="key-row">
+      <button class="key" data-key="q">Q</button><button class="key" data-key="w">W</button>
+      <button class="key" data-key="e">E</button><button class="key" data-key="r">R</button>
+      <button class="key" data-key="t">T</button><button class="key" data-key="y">Y</button>
+      <button class="key" data-key="u">U</button><button class="key" data-key="i">I</button>
+      <button class="key" data-key="o">O</button><button class="key" data-key="p">P</button>
+    </div>
+    <div class="key-row">
+      <button class="key" data-key="a">A</button><button class="key" data-key="s">S</button>
+      <button class="key" data-key="d">D</button><button class="key" data-key="f">F</button>
+      <button class="key" data-key="g">G</button><button class="key" data-key="h">H</button>
+      <button class="key" data-key="j">J</button><button class="key" data-key="k">K</button>
+      <button class="key" data-key="l">L</button>
+    </div>
+    <div class="key-row">
+      <button class="key wide" data-key="Enter">&#9166; Enter</button>
+      <button class="key" data-key="z">Z</button><button class="key" data-key="x">X</button>
+      <button class="key" data-key="c">C</button><button class="key" data-key="v">V</button>
+      <button class="key" data-key="b">B</button><button class="key" data-key="n">N</button>
+      <button class="key" data-key="m">M</button>
+      <button class="key wide" data-key="Backspace">&#9003; Del</button>
+    </div>
+  </div>
+
+  <!-- Stats Modal -->
+  <div class="modal-overlay" id="stats-modal">
+    <div class="modal">
+      <button class="modal-close" id="modal-close-btn">&#x2715;</button>
+      <div class="modal-header">
+        <div class="modal-icon">&#128202;</div>
+        <h2>Your Stats</h2>
+        <div class="modal-mode-tag" id="modal-mode-tag"></div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box"><span class="num" id="stat-played">0</span><span class="label">Played</span></div>
+        <div class="stat-box"><span class="num" id="stat-winpct">0</span><span class="label">Win %</span></div>
+        <div class="stat-box"><span class="num" id="stat-streak">0</span><span class="label">Streak</span></div>
+        <div class="stat-box"><span class="num" id="stat-maxstreak">0</span><span class="label">Best</span></div>
+      </div>
+      <div class="distribution">
+        <h3>&#127381; Guess Distribution</h3>
+        <div id="dist-bars"></div>
+      </div>
+      <div id="game-over-section" style="display:none;">
+        <p class="answer-reveal">The word was</p>
+        <p class="answer-word" id="answer-display"></p>
+      </div>
+      <!-- After completing a word, Exit goes back to home (select screen) -->
+      <button class="new-game-btn" id="new-game-btn">&#x1F3E0; Exit to Home</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
