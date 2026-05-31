@@ -1,4 +1,4 @@
-# Wordle
+# Wordle+
 
 A sleek, dark-themed Wordle game built with vanilla HTML, CSS, and JavaScript. No frameworks, no dependencies — just open and play.
 
